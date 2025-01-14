@@ -12,8 +12,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    const imageBase64 = await createCustomImage(url);
-    res.status(200).json({ image: imageBase64 });
+    const canvas = await createCustomImage(url);
+    
+    // Set response headers for image
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Cache-Control', 'no-cache');
+    
+    // Send the canvas buffer directly
+    const buffer = canvas.toBuffer('image/png');
+    res.send(buffer);
   } catch (error) {
     res.status(500).json({ error: "Error generating image", details: error.message });
   }
@@ -72,8 +79,7 @@ async function createCustomImage(url) {
     // Restore context
     ctx.restore();
 
-    // Convert to base64
-    return canvas.toDataURL('image/png').split(',')[1];
+    return canvas;
   } catch (error) {
     throw new Error(`Error creating image: ${error.message}`);
   }
