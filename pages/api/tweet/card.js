@@ -12,14 +12,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    const tweet = await createTweet(displayName, username, comment, avatar);
-    res.status(200).json(tweet);
+    const tweetImage = await createTweetImage(displayName, username, comment, avatar);
+    res.status(200).json({ image: tweetImage });
   } catch (error) {
     res.status(500).json({ error: "Error generating tweet", details: error.message });
   }
 }
 
-async function createTweet(displayName, username, comment, avatar) {
+async function createTweetImage(displayName, username, comment, avatar) {
   const tweet = await new canvafy.Tweet()
     .setTheme("light")
     .setUser({ displayName, username })
@@ -28,5 +28,8 @@ async function createTweet(displayName, username, comment, avatar) {
     .setAvatar(avatar)
     .build();
 
-  return tweet;
+  // Convert the image into base64 format
+  const imageBase64 = tweet.toBase64();  // Assuming 'toBase64' is a method to get base64 encoding of the image.
+
+  return imageBase64;
 }
