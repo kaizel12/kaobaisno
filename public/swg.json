@@ -191,6 +191,89 @@
         }
       }
     }, 
+        "/api/image": {
+      "get": {
+        "summary": "Hasilkan Gambar dengan Teks Kustom",
+        "description": "Endpoint ini menghasilkan gambar dengan latar belakang tetap dan teks yang diberikan oleh pengguna.",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "query",
+            "description": "Teks yang ingin ditampilkan pada gambar.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Teks Anda di sini"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil menghasilkan gambar",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parameter teks tidak diberikan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Missing required parameter: text"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Metode tidak diperbolehkan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Method not allowed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Kesalahan saat menghasilkan gambar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Error generating image"
+                    },
+                    "details": {
+                      "type": "string",
+                      "example": "Detail error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
     "/api/openai/gpt4-pro": {
       "get": {
         "summary": "",
