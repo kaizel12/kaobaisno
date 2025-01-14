@@ -10,25 +10,86 @@
     }
   },
   "paths": {
+    "/api/kuburancanvas": {
+      "get": {
+        "summary": "Generate Kuburan Canvas Image",
+        "description": "Generates a styled image with background and border effects",
+        "tags": ["Image Generator"],
+        "parameters": [{
+          "name": "url",
+          "in": "query",
+          "description": "URL of the image to be processed",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "https://example.com/image.jpg"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "image": {
+                      "type": "string",
+                      "description": "Base64 encoded generated image"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid URL parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error generating image",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/openai/gpt4-pro": {
       "get": {
         "summary": "",
         "description": "Gpt 4o Pro",
-        "tags": [
-          "Openai"
-        ],
-        "parameters": [
-          {
-            "name": "q",
-            "in": "query",
-            "description": "`Try Say Hello Gpt!`",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "Hello Gpt!"
-            }
+        "tags": ["Openai"],
+        "parameters": [{
+          "name": "q",
+          "in": "query",
+          "description": "`Try Say Hello Gpt!`",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "example": "Hello Gpt!"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "success",
@@ -57,21 +118,17 @@
       "get": {
         "summary": "",
         "description": "tiktok downloader",
-        "tags": [
-          "Downloader Sosmed"
-        ],
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "description": "`Try Paste Tiktok Url`",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "https://vt.tiktok.com/ZSjunPJbq"
-            }
+        "tags": ["Downloader Sosmed"],
+        "parameters": [{
+          "name": "url",
+          "in": "query",
+          "description": "`Try Paste Tiktok Url`",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "example": "https://vt.tiktok.com/ZSjunPJbq"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "success",
@@ -100,21 +157,17 @@
       "get": {
         "summary": "",
         "description": "tiktok stalker with username",
-        "tags": [
-          "Stalker Sosial Media"
-        ],
-        "parameters": [
-          {
-            "name": "username",
-            "in": "query",
-            "description": "`Try Input Username Tiktok`",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "iqstore78"
-            }
+        "tags": ["Stalker Sosial Media"],
+        "parameters": [{
+          "name": "username",
+          "in": "query",
+          "description": "`Try Input Username Tiktok`",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "example": "iqstore78"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "success",
@@ -143,9 +196,7 @@
       "post": {
         "summary": "",
         "description": "Try Input Package Name",
-        "tags": [
-          "Stalker Sosial Media"
-        ],
+        "tags": ["Stalker Sosial Media"],
         "requestBody": {
           "required": true,
           "content": {
@@ -192,9 +243,7 @@
       "post": {
         "summary": "",
         "description": "instagram stalker with username",
-        "tags": [
-          "Stalker Sosial Media"
-        ],
+        "tags": ["Stalker Sosial Media"],
         "requestBody": {
           "required": true,
           "content": {
@@ -241,21 +290,17 @@
       "get": {
         "summary": "",
         "description": "test server",
-        "tags": [
-          "Testings Developer"
-        ],
-        "parameters": [
-          {
-            "name": "q",
-            "in": "query",
-            "description": "`Try Say Hello World`",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "Hello World!"
-            }
+        "tags": ["Testings Developer"],
+        "parameters": [{
+          "name": "q",
+          "in": "query",
+          "description": "`Try Say Hello World`",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "example": "Hello World!"
           }
-        ],
+        }],
         "responses": {
           "200": {
             "description": "success",
@@ -284,51 +329,47 @@
       "get": {
         "summary": "Generate Tweet Card",
         "description": "Generates a tweet card using canvafy based on the provided user details.",
-        "tags": [
-          "Tweet Generator"
-        ],
-        "parameters": [
-          {
-            "name": "displayName",
-            "in": "query",
-            "description": "The display name of the user for the tweet card.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "Beş"
-            }
-          },
-          {
-            "name": "username",
-            "in": "query",
-            "description": "The username of the user for the tweet card.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "fivesobes"
-            }
-          },
-          {
-            "name": "comment",
-            "in": "query",
-            "description": "The comment text for the tweet card.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "This is a tweet card. Enjoy!"
-            }
-          },
-          {
-            "name": "avatar",
-            "in": "query",
-            "description": "URL of the user's avatar image.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "https://example.com/avatar.png"
-            }
+        "tags": ["Tweet Generator"],
+        "parameters": [{
+          "name": "displayName",
+          "in": "query",
+          "description": "The display name of the user for the tweet card.",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "Beş"
           }
-        ],
+        },
+        {
+          "name": "username",
+          "in": "query",
+          "description": "The username of the user for the tweet card.",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "fivesobes" 
+          }
+        },
+        {
+          "name": "comment",
+          "in": "query",
+          "description": "The comment text for the tweet card.",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "This is a tweet card. Enjoy!"
+          }
+        },
+        {
+          "name": "avatar",
+          "in": "query",
+          "description": "URL of the user's avatar image.",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "https://example.com/avatar.png"
+          }
+        }],
         "responses": {
           "200": {
             "description": "success",
@@ -370,4 +411,4 @@
       }
     }
   }
-}
+              }
