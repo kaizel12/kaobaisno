@@ -279,6 +279,95 @@
           }
         }
       }
+    },
+    "/api/tweet/card": {
+      "get": {
+        "summary": "Generate Tweet Card",
+        "description": "Generates a tweet card using canvafy based on the provided user details.",
+        "tags": [
+          "Tweet Generator"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "The display name of the user for the tweet card.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Beş"
+            }
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "description": "The username of the user for the tweet card.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "fivesobes"
+            }
+          },
+          {
+            "name": "comment",
+            "in": "query",
+            "description": "The comment text for the tweet card.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "This is a tweet card. Enjoy!"
+            }
+          },
+          {
+            "name": "avatar",
+            "in": "query",
+            "description": "URL of the user's avatar image.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "https://example.com/avatar.png"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tweetCard": {
+                      "type": "string",
+                      "description": "Generated tweet card image"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error generating tweet card",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
