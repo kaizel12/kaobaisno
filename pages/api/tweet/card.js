@@ -1,8 +1,5 @@
 import fs from 'fs';
-import path from 'path';
 import canvafy from "canvafy";
-import { tmpdir } from 'os';
-import { join } from 'path';
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -17,13 +14,15 @@ export default async function handler(req, res) {
 
   try {
     const tweetImagePath = await createTweetImage(displayName, username, comment, avatar);
-    res.setHeader('Content-Type', 'image/png');  // Set content type for PNG image
-    res.status(200).sendFile(tweetImagePath, (err) => {
-      if (err) {
-        return res.status(500).json({ error: "Error sending image", details: err.message });
-      }
-      // Clean up the temporary file after sending it
-      fs.unlinkSync(tweetImagePath);
+    const imageBuffer = fs.readFileSync(tweetImagePath); // Baca file gambar
+    const base64Image = imageBuffer.toString('base64'); // Konversi ke Base64
+
+    // Hapus file sementara setelah membaca
+    fs.unlinkSync(tweetImagePath);
+
+    // Kirimkan gambar dalam format Base64
+    res.status(200).json({
+      image: `data:image/png;base64,${base64Image}` // Format Base64 dengan prefix data URL
     });
   } catch (error) {
     res.status(500).json({ error: "Error generating tweet", details: error.message });
@@ -39,9 +38,9 @@ async function createTweetImage(displayName, username, comment, avatar) {
     .setAvatar(avatar)
     .build();
 
-  // Save the generated image to a temporary file
-  const tempImagePath = join(tmpdir(), `tweet_${Date.now()}.png`);
-  await tweet.toFile(tempImagePath);  // Assuming `toFile` is available and saves the image to a file
+  // Simpan file sementara di folder kerja
+  const tempImagePath = `tweet_${Date.now()}.png`;
+  await tweet.toFile(tempImagePath); // Pastikan `toFile` tersedia
 
   return tempImagePath;
 }
