@@ -12,8 +12,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    const tweetImage = await createTweetImage(displayName, username, comment, avatar);
-    res.status(200).json({ image: tweetImage });
+    const tweetImageBuffer = await createTweetImage(displayName, username, comment, avatar);
+    res.setHeader('Content-Type', 'image/png');  // Set content type for PNG image
+    res.status(200).send(tweetImageBuffer);  // Send the image buffer directly
   } catch (error) {
     res.status(500).json({ error: "Error generating tweet", details: error.message });
   }
@@ -28,8 +29,8 @@ async function createTweetImage(displayName, username, comment, avatar) {
     .setAvatar(avatar)
     .build();
 
-  // Convert the image into base64 format
-  const imageBase64 = tweet.toBase64();  // Assuming 'toBase64' is a method to get base64 encoding of the image.
+  // Convert the image to buffer (binary data)
+  const imageBuffer = await tweet.toBuffer();  // Using toBuffer instead of toBase64
 
-  return imageBase64;
+  return imageBuffer;
 }
