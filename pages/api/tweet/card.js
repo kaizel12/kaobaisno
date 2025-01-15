@@ -1,3 +1,4 @@
+import { createCanvas, loadImage } from 'canvas';
 import canvafy from "canvafy";
 
 export default async function handler(req, res) {
@@ -29,8 +30,30 @@ async function createTweetImage(displayName, username, comment, avatar) {
     .setAvatar(avatar)
     .build();
 
-  // Try using .toPng() or other similar methods if available
-  const imageBuffer = await tweet.toPng();  // Assuming toPng() is supported by canvafy
+  // Set up a canvas to draw the tweet
+  const canvas = createCanvas(800, 400); // Adjust size as necessary
+  const ctx = canvas.getContext('2d');
+
+  // Draw the tweet elements (simple example, you can add more details here)
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Load and draw avatar image
+  const avatarImage = await loadImage(avatar); // Load avatar image
+  ctx.drawImage(avatarImage, 10, 10, 50, 50); // Draw avatar at a fixed position
+
+  // Draw display name and username
+  ctx.fillStyle = '#000000';
+  ctx.font = '20px Arial';
+  ctx.fillText(displayName, 70, 30);
+  ctx.fillText(`@${username}`, 70, 60);
+
+  // Draw the comment text
+  ctx.font = '16px Arial';
+  ctx.fillText(comment, 10, 100, canvas.width - 20);
+
+  // Convert the canvas to a PNG image buffer
+  const imageBuffer = canvas.toBuffer('image/png');
 
   return imageBuffer;
 }
