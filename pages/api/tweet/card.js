@@ -1,4 +1,3 @@
-import fs from 'fs';
 import canvafy from "canvafy";
 
 export default async function handler(req, res) {
@@ -13,34 +12,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    const tweetImagePath = await createTweetImage(displayName, username, comment, avatar);
-    const imageBuffer = fs.readFileSync(tweetImagePath); // Baca file gambar
-    const base64Image = imageBuffer.toString('base64'); // Konversi ke Base64
+    // Membuat gambar tweet menggunakan Canvafy
+    const tweet = await new canvafy.Tweet()
+      .setTheme("light")
+      .setUser({ displayName, username })
+      .setVerified(true)
+      .setComment(comment)
+      .setAvatar(avatar)
+      .build();
 
-    // Hapus file sementara setelah membaca
-    fs.unlinkSync(tweetImagePath);
+    // Konversi gambar langsung ke Base64
+    const base64Image = Buffer.from(tweet).toString("base64");
 
     // Kirimkan gambar dalam format Base64
     res.status(200).json({
-      image: `data:image/png;base64,${base64Image}` // Format Base64 dengan prefix data URL
+      image: `data:image/png;base64,${base64Image}`, // Format data URL
     });
   } catch (error) {
     res.status(500).json({ error: "Error generating tweet", details: error.message });
   }
-}
-
-async function createTweetImage(displayName, username, comment, avatar) {
-  const tweet = await new canvafy.Tweet()
-    .setTheme("light")
-    .setUser({ displayName, username })
-    .setVerified(true)
-    .setComment(comment)
-    .setAvatar(avatar)
-    .build();
-
-  // Simpan file sementara di folder kerja
-  const tempImagePath = `tweet_${Date.now()}.png`;
-  await tweet.toFile(tempImagePath); // Pastikan `toFile` tersedia
-
-  return tempImagePath;
 }
