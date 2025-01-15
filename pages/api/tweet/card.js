@@ -29,8 +29,8 @@ async function createTweetImage(displayName, username, comment, avatar) {
     .setAvatar(avatar)
     .build();
 
-  // Convert the image to buffer (binary data)
-  const imageBuffer = await tweet.toBuffer();  // Using toBuffer instead of toBase64
+  // Try using .toPng() or other similar methods if available
+  const imageBuffer = await tweet.toPng();  // Assuming toPng() is supported by canvafy
 
   return imageBuffer;
 }
