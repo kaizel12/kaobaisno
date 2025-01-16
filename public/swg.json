@@ -2,11 +2,11 @@
   "openapi": "3.0.0",
   "info": {
     "version": "nextjs",
-    "title": "Shiina-Api's",
+    "title": "Kaizel-Api's",
     "description": "Hello World",
     "contact": {
       "name": "Source Code",
-      "url": "https://github.com/balxz/swagger-nextjs"
+      "url": "kaizel"
     }
   },
   "paths": {
@@ -158,6 +158,421 @@
         }
       }
     }, 
+    "/api/filtersepia": {
+    "get": {
+      "summary": "Tambahkan efek sepia ke gambar",
+      "description": "Mengambil gambar dari URL dan menambahkan efek sepia.",
+      "parameters": [
+        {
+          "name": "url",
+          "in": "query",
+          "required": true,
+          "description": "URL gambar sumber.",
+          "schema": {
+            "type": "string",
+            "format": "url"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Gambar dengan efek sepia berhasil dibuat.",
+          "content": {
+            "image/png": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Parameter `url` tidak ditemukan.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Missing url parameter"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "405": {
+          "description": "Metode HTTP tidak diizinkan.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Method not allowed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Terjadi kesalahan pada server.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Error generating image"
+                  },
+                  "details": {
+                    "type": "string",
+                    "example": "Failed to create sepia effect: ..."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/api/filterinvert": {
+    "get": {
+      "summary": "Menerapkan efek invert ke gambar",
+      "description": "Mengambil gambar dari URL dan menerapkan efek invert pada gambar tersebut.",
+      "parameters": [
+        {
+          "name": "url",
+          "in": "query",
+          "required": true,
+          "description": "URL gambar sumber.",
+          "schema": {
+            "type": "string",
+            "format": "url"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Gambar dengan efek invert berhasil dibuat.",
+          "content": {
+            "image/png": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Parameter `url` tidak ditemukan.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Missing url parameter"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "405": {
+          "description": "Metode HTTP tidak diizinkan.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Method not allowed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Terjadi kesalahan pada server.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Error generating image"
+                  },
+                  "details": {
+                    "type": "string",
+                    "example": "Failed to create invert effect: ..."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }, 
+  "/api/filtersketsa": {
+    "get": {
+      "summary": "Menerapkan efek sketsa ke gambar",
+      "description": "Mengambil gambar dari URL dan menerapkan efek sketsa hitam putih pada gambar tersebut.",
+      "parameters": [
+        {
+          "name": "url",
+          "in": "query",
+          "required": true,
+          "description": "URL gambar sumber.",
+          "schema": {
+            "type": "string",
+            "format": "url"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Gambar dengan efek sketsa berhasil dibuat.",
+          "content": {
+            "image/png": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Parameter `url` tidak ditemukan.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Missing url parameter"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "405": {
+          "description": "Metode HTTP tidak diizinkan.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Method not allowed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Terjadi kesalahan pada server.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Error generating image"
+                  },
+                  "details": {
+                    "type": "string",
+                    "example": "Failed to create sketch effect: ..."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/api/filtervintage": {
+    "get": {
+      "summary": "Menerapkan efek vintage ke gambar",
+      "description": "Mengambil gambar dari URL dan menerapkan efek vintage dengan warna retro pada gambar tersebut.",
+      "parameters": [
+        {
+          "name": "url",
+          "in": "query",
+          "required": true,
+          "description": "URL gambar sumber.",
+          "schema": {
+            "type": "string",
+            "format": "url"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Gambar dengan efek vintage berhasil dibuat.",
+          "content": {
+            "image/png": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Parameter `url` tidak ditemukan.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Missing url parameter"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "405": {
+          "description": "Metode HTTP tidak diizinkan.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Method not allowed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Terjadi kesalahan pada server.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Error generating image"
+                  },
+                  "details": {
+                    "type": "string",
+                    "example": "Failed to create vintage effect: ..."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/api/filterglitch": {
+    "get": {
+      "summary": "Menerapkan efek glitch ke gambar",
+      "description": "Mengambil gambar dari URL dan menerapkan efek glitch dengan distorsi warna pada gambar tersebut.",
+      "parameters": [
+        {
+          "name": "url",
+          "in": "query",
+          "required": true,
+          "description": "URL gambar sumber.",
+          "schema": {
+            "type": "string",
+            "format": "url"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Gambar dengan efek glitch berhasil dibuat.",
+          "content": {
+            "image/png": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Parameter `url` tidak ditemukan.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Missing url parameter"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "405": {
+          "description": "Metode HTTP tidak diizinkan.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Method not allowed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Terjadi kesalahan pada server.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Error generating image"
+                  },
+                  "details": {
+                    "type": "string",
+                    "example": "Failed to create glitch effect: ..."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }, 
         "/api/filterlgbt": {
       "get": {
         "summary": "Tambahkan overlay bendera LGBT ke gambar",
