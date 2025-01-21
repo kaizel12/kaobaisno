@@ -295,63 +295,147 @@
     }
   }
 }, 
-"/api/tweet/beautiful": {
-  "get": {
-    "summary": "Generate Beautiful Image",
-    "description": "Generates a beautiful version of the given image URL using Canvafy.",
-    "tags": ["Image Generator"],
-    "parameters": [
-      {
-        "name": "imageUrl",
-        "in": "query",
-        "description": "The URL of the image to beautify.",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "example": "https://i.imgur.com/2pOpPKf.png"
+  "/api/tweet/igh": {
+    "get": {
+      "summary": "Generate Instagram Post",
+      "description": "Generates an Instagram post using Canvafy based on the provided details.",
+      "tags": ["Instagram Post Generator"],
+      "parameters": [
+        {
+          "name": "username",
+          "in": "query",
+          "description": "Username pengguna Instagram.",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "_berknt"
+          }
+        },
+        {
+          "name": "likeCount",
+          "in": "query",
+          "description": "Jumlah suka pada postingan.",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "example": 1200
+          }
+        },
+        {
+          "name": "likeText",
+          "in": "query",
+          "description": "Teks untuk menampilkan jumlah suka.",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "like"
+          }
+        },
+        {
+          "name": "avatar",
+          "in": "query",
+          "description": "URL avatar pengguna.",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "https://example.com/avatar.jpg"
+          }
+        },
+        {
+          "name": "postImage",
+          "in": "query",
+          "description": "URL gambar postingan Instagram.",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "example": "https://example.com/post.jpg"
+          }
+        },
+        {
+          "name": "verified",
+          "in": "query",
+          "description": "Apakah pengguna terverifikasi (true atau false).",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": ["true", "false"],
+            "example": "true"
+          }
+        },
+        {
+          "name": "story",
+          "in": "query",
+          "description": "Apakah postingan bagian dari story (true atau false).",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": ["true", "false"],
+            "example": "true"
+          }
+        },
+        {
+          "name": "liked",
+          "in": "query",
+          "description": "Apakah postingan disukai oleh pengguna (true atau false).",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": ["true", "false"],
+            "example": "true"
+          }
+        },
+        {
+          "name": "saved",
+          "in": "query",
+          "description": "Apakah postingan disimpan oleh pengguna (true atau false).",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": ["true", "false"],
+            "example": "true"
+          }
         }
-      }
-    ],
-    "responses": {
-      "200": {
-        "description": "Success",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "image": {
-                  "type": "string",
-                  "description": "Generated beautiful image in Base64 format"
+      ],
+      "responses": {
+        "200": {
+          "description": "Sukses",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "description": "Generated Instagram post in Base64 format"
+                  }
                 }
               }
             }
           }
-        }
-      },
-      "400": {
-        "description": "Missing required parameter",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "string"
+        },
+        "400": {
+          "description": "Parameter yang diperlukan tidak lengkap",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
             }
           }
-        }
-      },
-      "500": {
-        "description": "Error generating beautiful image",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "string"
+        },
+        "500": {
+          "description": "Terjadi kesalahan saat menghasilkan postingan Instagram",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
             }
           }
         }
       }
     }
-  }
-}, 
+  }, 
 "/api/tweet/kiss": {
   "get": {
     "summary": "Generate Kiss Image",
