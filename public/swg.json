@@ -158,6 +158,625 @@
         }
       }
     }, 
+    "/api/tweet/instagram": {
+  "get": {
+    "summary": "Generate Instagram Post",
+    "description": "Generates an Instagram post using Canvafy based on the provided details.",
+    "tags": ["Instagram Post Generator"],
+    "parameters": [
+      {
+        "name": "username",
+        "in": "query",
+        "description": "The username of the Instagram user.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "_berknt"
+        }
+      },
+      {
+        "name": "likeCount",
+        "in": "query",
+        "description": "The number of likes on the post.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 1200
+        }
+      },
+      {
+        "name": "likeText",
+        "in": "query",
+        "description": "Text for the like count display.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "like"
+        }
+      },
+      {
+        "name": "avatar",
+        "in": "query",
+        "description": "URL of the user's avatar.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://example.com/avatar.jpg"
+        }
+      },
+      {
+        "name": "postImage",
+        "in": "query",
+        "description": "URL of the Instagram post image.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://example.com/post.jpg"
+        }
+      },
+      {
+        "name": "verified",
+        "in": "query",
+        "description": "Whether the user is verified.",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "example": true
+        }
+      },
+      {
+        "name": "story",
+        "in": "query",
+        "description": "Whether the post is part of a story.",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "example": true
+        }
+      },
+      {
+        "name": "liked",
+        "in": "query",
+        "description": "Whether the post is liked by the user.",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "example": true
+        }
+      },
+      {
+        "name": "saved",
+        "in": "query",
+        "description": "Whether the post is saved by the user.",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "description": "Generated Instagram post in Base64 format"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Missing required parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Error generating Instagram post",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}, 
+"/api/tweet/beautiful": {
+  "get": {
+    "summary": "Generate Beautiful Image",
+    "description": "Generates a beautiful version of the given image URL using Canvafy.",
+    "tags": ["Image Generator"],
+    "parameters": [
+      {
+        "name": "imageUrl",
+        "in": "query",
+        "description": "The URL of the image to beautify.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://i.imgur.com/2pOpPKf.png"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "description": "Generated beautiful image in Base64 format"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Missing required parameter",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Error generating beautiful image",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}, 
+"/api/tweet/kiss": {
+  "get": {
+    "summary": "Generate Kiss Image",
+    "description": "Generates a 'kiss' image between two avatars using Canvafy.",
+    "tags": ["Image Generator"],
+    "parameters": [
+      {
+        "name": "avatar1",
+        "in": "query",
+        "description": "URL of the first avatar.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://cdn.discordapp.com/avatars/928259219038302258/cb1bcc0c5616d3fb1527b4ea03c9ae17.png?size=1024"
+        }
+      },
+      {
+        "name": "avatar2",
+        "in": "query",
+        "description": "URL of the second avatar.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://cdn.discordapp.com/avatars/852103749228036136/4d5eac54076d6b72edbddd3339d39b49.png?size=1024"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "description": "Generated kiss image in Base64 format"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Missing required parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Error generating kiss image",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}, 
+"/api/tweet/batslap": {
+  "get": {
+    "summary": "Generate Batslap Image",
+    "description": "Generates a 'batslap' image between two avatars using Canvafy.",
+    "tags": ["Image Generator"],
+    "parameters": [
+      {
+        "name": "avatar1",
+        "in": "query",
+        "description": "URL of the first avatar.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://cdn.discordapp.com/avatars/928259219038302258/cb1bcc0c5616d3fb1527b4ea03c9ae17.png?size=1024"
+        }
+      },
+      {
+        "name": "avatar2",
+        "in": "query",
+        "description": "URL of the second avatar.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://cdn.discordapp.com/avatars/852103749228036136/4d5eac54076d6b72edbddd3339d39b49.png?size=1024"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "description": "Generated batslap image in Base64 format"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Missing required parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Error generating batslap image",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}, 
+"/api/tweet/affect": {
+  "get": {
+    "summary": "Generate Affect Image",
+    "description": "Generates an 'affect' image from a given avatar using Canvafy.",
+    "tags": ["Image Generator"],
+    "parameters": [
+      {
+        "name": "avatar",
+        "in": "query",
+        "description": "URL of the avatar image.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://i.imgur.com/2pOpPKf.png"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "description": "Generated affect image in Base64 format"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Missing required parameter",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Error generating affect image",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}, 
+"/api/tweet/level-up": {
+  "get": {
+    "summary": "Generate Level-Up Card",
+    "description": "Generates a level-up card for a user using Canvafy.",
+    "tags": ["Card Generator"],
+    "parameters": [
+      {
+        "name": "avatar",
+        "in": "query",
+        "description": "URL of the user's avatar.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://cdn.discordapp.com/avatars/928259219038302258/cb1bcc0c5616d3fb1527b4ea03c9ae17.png?size=1024"
+        }
+      },
+      {
+        "name": "background",
+        "in": "query",
+        "description": "URL of the background image.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://cdn.discordapp.com/attachments/1041745966186909826/1096055377289814126/e4a8a79fccae98487a74d8bd1f2357834dfa7295.png"
+        }
+      },
+      {
+        "name": "username",
+        "in": "query",
+        "description": "The username of the user.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "Beş"
+        }
+      },
+      {
+        "name": "border",
+        "in": "query",
+        "description": "The hex color code for the border.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "#000000"
+        }
+      },
+      {
+        "name": "avatarBorder",
+        "in": "query",
+        "description": "The hex color code for the avatar border.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "#ff0000"
+        }
+      },
+      {
+        "name": "currentLevel",
+        "in": "query",
+        "description": "The current level of the user.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 55
+        }
+      },
+      {
+        "name": "nextLevel",
+        "in": "query",
+        "description": "The next level of the user.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 56
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "description": "Generated level-up card image in Base64 format"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Missing required parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Error generating level-up card",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}, 
+"/api/tweet/security-card": {
+  "get": {
+    "summary": "Generate Security Card",
+    "description": "Generates a security card for a user based on their account information using Canvafy.",
+    "tags": ["Card Generator"],
+    "parameters": [
+      {
+        "name": "avatar",
+        "in": "query",
+        "description": "URL of the user's avatar.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://cdn.discordapp.com/avatars/928259219038302258/cb1bcc0c5616d3fb1527b4ea03c9ae17.png?size=1024"
+        }
+      },
+      {
+        "name": "background",
+        "in": "query",
+        "description": "URL of the background image.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://cdn.discordapp.com/attachments/1087030211813593190/1110243947311288530/beeautiful-sunset-illustration-1212023.webp"
+        }
+      },
+      {
+        "name": "createdTimestamp",
+        "in": "query",
+        "description": "Timestamp when the user account was created.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 1673347200000
+        }
+      },
+      {
+        "name": "suspectTimestamp",
+        "in": "query",
+        "description": "Timestamp for the suspected activity, usually in milliseconds.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 604800000
+        }
+      },
+      {
+        "name": "border",
+        "in": "query",
+        "description": "The hex color code for the border.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "#f0f0f0"
+        }
+      },
+      {
+        "name": "avatarBorder",
+        "in": "query",
+        "description": "The hex color code for the avatar border.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "#f0f0f0"
+        }
+      },
+      {
+        "name": "locale",
+        "in": "query",
+        "description": "The locale (country code) for the display text.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "en"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "description": "Generated security card image in Base64 format"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Missing required parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Error generating security card",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}, 
     "/api/tweet/spotify": {
   "get": {
     "summary": "Generate Spotify Card",
