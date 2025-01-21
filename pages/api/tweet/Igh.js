@@ -1,5 +1,8 @@
 import canvafy from "canvafy";
 
+// Fungsi untuk menunda eksekusi
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -22,6 +25,9 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Tambahkan delay sebelum membuat gambar
+    await delay(7000); // Delay 5 detik (5000 ms)
+
     // Create the Instagram image using Canvafy
     const instagram = await new canvafy.Instagram()
       .setTheme("light") // Light theme
