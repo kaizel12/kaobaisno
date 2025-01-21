@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Membuat gambar menggunakan metode beautiful
+    // Menghasilkan gambar "beautiful" menggunakan Canvafy
     const beautifulImage = await canvafy.Image.beautiful(imageUrl);
 
     // Konversi gambar ke Base64
