@@ -158,6 +158,113 @@
         }
       }
     }, 
+    "/api/tweet/spotify": {
+  "get": {
+    "summary": "Generate Spotify Card",
+    "description": "Generates a Spotify card using Canvafy based on the provided details.",
+    "tags": ["Spotify Card Generator"],
+    "parameters": [
+      {
+        "name": "author",
+        "in": "query",
+        "description": "The artist or author of the song.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "Sagopa Kajmer, Şehinşah"
+        }
+      },
+      {
+        "name": "album",
+        "in": "query",
+        "description": "The name of the album.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "Kağıt Kesikleri"
+        }
+      },
+      {
+        "name": "timestampStart",
+        "in": "query",
+        "description": "The starting timestamp of the song (in milliseconds).",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 121000
+        }
+      },
+      {
+        "name": "timestampEnd",
+        "in": "query",
+        "description": "The ending timestamp of the song (in milliseconds).",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 263400
+        }
+      },
+      {
+        "name": "image",
+        "in": "query",
+        "description": "The URL of the album image.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "https://i.scdn.co/image/ab67616d00001e02621fe38a73b2a45e9be957d3"
+        }
+      },
+      {
+        "name": "title",
+        "in": "query",
+        "description": "The title of the song.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "Bla Bla Bla Bla"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "description": "Generated Spotify card image in Base64 format"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Missing required parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Error generating Spotify card",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}, 
     "/api/filtersepia": {
     "get": {
       "summary": "Tambahkan efek sepia ke gambar",
