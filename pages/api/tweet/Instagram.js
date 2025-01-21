@@ -22,27 +22,24 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Membuat gambar Instagram menggunakan Canvafy
+    // Create the Instagram image using Canvafy
     const instagram = await new canvafy.Instagram()
-      .setTheme("light") // Tema Light
-      .setUser({ username }) // Username
-      .setLike({ count: Number(likeCount), likeText }) // Like
-      .setVerified(verified === "true") // Verified User
-      .setStory(story === "true") // Instagram Story
-      .setPostDate(Date.now() - 1000 * 60 * 60 * 24 * 2) // Post date (2 hari lalu)
-      .setAvatar(avatar) // URL Avatar
-      .setPostImage(postImage) // URL Gambar Postingan
-      .setLiked(liked === "true") // Status Liked
-      .setSaved(saved === "true") // Status Saved
+      .setTheme("light") // Light theme
+      .setUser({ username }) // Set the username
+      .setLike({ count: Number(likeCount), likeText }) // Set the like count and text
+      .setVerified(verified === "true") // Verified user
+      .setStory(story === "true") // Instagram story flag
+      .setPostDate(Date.now() - 1000 * 60 * 60 * 24 * 2) // Post date (2 days ago)
+      .setAvatar(avatar) // Avatar URL
+      .setPostImage(postImage) // Post image URL
+      .setLiked(liked === "true") // Liked status
+      .setSaved(saved === "true") // Saved status
       .build();
 
-    // Konversi gambar ke Base64
-    const base64Image = Buffer.from(instagram).toString("base64");
+    // Send the image buffer directly in the response
+    res.setHeader('Content-Type', 'image/png');
+    res.status(200).send(instagram); // Send the image buffer
 
-    // Kirimkan gambar dalam format Base64
-    res.status(200).json({
-      image: `data:image/png;base64,${base64Image}` // Format data URL
-    });
   } catch (error) {
     res.status(500).json({ error: "Error generating Instagram post", details: error.message });
   }
