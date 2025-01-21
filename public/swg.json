@@ -158,7 +158,7 @@
         }
       }
     }, 
-    "/api/tweet/instagram": {
+    "/api/tweet/igh": {
   "get": {
     "summary": "Generate Instagram Post",
     "description": "Generates an Instagram post using Canvafy based on the provided details.",
