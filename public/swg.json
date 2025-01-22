@@ -158,147 +158,188 @@
         }
       }
     }, 
-  "/api/tweet/igh": {
-    "get": {
-      "summary": "Generate Instagram Post",
-      "description": "Generates an Instagram post using Canvafy based on the provided details.",
-      "tags": ["Instagram Post Generator"],
-      "parameters": [
-        {
-          "name": "username",
-          "in": "query",
-          "description": "Username pengguna Instagram.",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "example": "_berknt"
+    "/api/tweet/igh": {
+      "get": {
+        "summary": "Generate Instagram-style post image",
+        "description": "Creates an Instagram-style post image with customizable parameters",
+        "operationId": "generateInstagramPost",
+        "tags": ["Instagram"],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "required": true,
+            "description": "Instagram username for the post",
+            "schema": {
+              "type": "string",
+              "example": "example_user"
+            }
+          },
+          {
+            "name": "likeCount",
+            "in": "query",
+            "required": true,
+            "description": "Number of likes on the post",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "example": 100
+            }
+          },
+          {
+            "name": "likeText",
+            "in": "query",
+            "required": true,
+            "description": "Text to display for likes (e.g., 'likes', 'suka')",
+            "schema": {
+              "type": "string",
+              "example": "likes"
+            }
+          },
+          {
+            "name": "avatar",
+            "in": "query",
+            "required": true,
+            "description": "URL of the user's avatar image",
+            "schema": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://example.com/avatar.jpg"
+            }
+          },
+          {
+            "name": "postImage",
+            "in": "query",
+            "required": true,
+            "description": "URL of the post image",
+            "schema": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://example.com/post.jpg"
+            }
+          },
+          {
+            "name": "verified",
+            "in": "query",
+            "required": false,
+            "description": "Whether the user is verified",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"],
+              "default": "false"
+            }
+          },
+          {
+            "name": "story",
+            "in": "query",
+            "required": false,
+            "description": "Whether to show story ring",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"],
+              "default": "false"
+            }
+          },
+          {
+            "name": "liked",
+            "in": "query",
+            "required": false,
+            "description": "Whether the post is liked by the viewer",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"],
+              "default": "false"
+            }
+          },
+          {
+            "name": "saved",
+            "in": "query",
+            "required": false,
+            "description": "Whether the post is saved by the viewer",
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"],
+              "default": "false"
+            }
           }
-        },
-        {
-          "name": "likeCount",
-          "in": "query",
-          "description": "Jumlah suka pada postingan.",
-          "required": true,
-          "schema": {
-            "type": "integer",
-            "example": 1200
-          }
-        },
-        {
-          "name": "likeText",
-          "in": "query",
-          "description": "Teks untuk menampilkan jumlah suka.",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "example": "like"
-          }
-        },
-        {
-          "name": "avatar",
-          "in": "query",
-          "description": "URL avatar pengguna.",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "example": "https://example.com/avatar.jpg"
-          }
-        },
-        {
-          "name": "postImage",
-          "in": "query",
-          "description": "URL gambar postingan Instagram.",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "example": "https://example.com/post.jpg"
-          }
-        },
-        {
-          "name": "verified",
-          "in": "query",
-          "description": "Apakah pengguna terverifikasi (true atau false).",
-          "required": false,
-          "schema": {
-            "type": "string",
-            "enum": ["true", "false"],
-            "example": "true"
-          }
-        },
-        {
-          "name": "story",
-          "in": "query",
-          "description": "Apakah postingan bagian dari story (true atau false).",
-          "required": false,
-          "schema": {
-            "type": "string",
-            "enum": ["true", "false"],
-            "example": "true"
-          }
-        },
-        {
-          "name": "liked",
-          "in": "query",
-          "description": "Apakah postingan disukai oleh pengguna (true atau false).",
-          "required": false,
-          "schema": {
-            "type": "string",
-            "enum": ["true", "false"],
-            "example": "true"
-          }
-        },
-        {
-          "name": "saved",
-          "in": "query",
-          "description": "Apakah postingan disimpan oleh pengguna (true atau false).",
-          "required": false,
-          "schema": {
-            "type": "string",
-            "enum": ["true", "false"],
-            "example": "true"
-          }
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Sukses",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "image": {
-                    "type": "string",
-                    "description": "Generated Instagram post in Base64 format"
-                  }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instagram post image generated successfully",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
-          }
-        },
-        "400": {
-          "description": "Parameter yang diperlukan tidak lengkap",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
+          },
+          "400": {
+            "description": "Bad request - missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Missing required parameters",
+                  "details": "username is required"
+                }
               }
             }
-          }
-        },
-        "500": {
-          "description": "Terjadi kesalahan saat menghasilkan postingan Instagram",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Method not allowed"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Error generating Instagram post",
+                  "details": "Internal server error"
+                }
               }
             }
           }
         }
       }
-    }
-  }, 
+    }, 
 "/api/tweet/kiss": {
   "get": {
     "summary": "Generate Kiss Image",
