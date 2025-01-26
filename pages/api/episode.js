@@ -1,5 +1,4 @@
-import axios from "axios";
-import cheerio from "cheerio";
+import puppeteer from 'puppeteer';
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -12,7 +11,7 @@ export default async function handler(req, res) {
   }
 
   const baseUrl = `https://otakudesu.cloud/episode/${id}`; // Menggabungkan ID dengan base URL
-  const result = await getEpisodeDetailsWithAllOrigins(baseUrl);
+  const result = await getEpisodeDetails(baseUrl);
 
   if (!result) {
     return res.status(500).json({ error: "Failed to fetch episode details" });
@@ -21,21 +20,13 @@ export default async function handler(req, res) {
   res.status(200).json(result);
 }
 
-async function getEpisodeDetailsWithAllOrigins(url) {
+async function getEpisodeDetails(url) {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
   try {
-    // AllOrigins Proxy URL
-    const allOriginsUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-    
-    const { data } = await axios.get(allOriginsUrl);
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
 
-    // Pastikan data.contents ada sebelum melanjutkan
-    if (!data || !data.contents) {
-      throw new Error("No content received from AllOrigins");
-    }
-
-    const $ = cheerio.load(data.contents);
-
-    const episodeTitle = $("h1.entry-title").text().trim();
+    const episodeTitle = await page.$eval("h1.entry-title", (el) => el.textContent.trim());
 
     // Object to store download links grouped by resolution
     const downloadLinks = {
@@ -45,28 +36,35 @@ async function getEpisodeDetailsWithAllOrigins(url) {
       "1080p": [],
     };
 
-    // Parsing links
-    $(".download ul li").each((index, element) => {
-      const resolutionText = $(element).find("strong").text().trim();
-      const resolution = resolutionText.match(/\d+p/)?.[0]; // Extract resolution (e.g., "360p", "480p")
+    // Parsing download links for different resolutions
+    const links = await page.$$eval(".download ul li", (items) => {
+      return items.map((item) => {
+        const resolutionText = item.querySelector("strong")?.textContent.trim();
+        const resolution = resolutionText?.match(/\d+p/)?.[0];
 
-      if (resolution && downloadLinks[resolution]) {
-        $(element)
-          .find("a")
-          .each((_, link) => {
-            const linkText = $(link).text().trim();
-            const linkUrl = $(link).attr("href");
-            downloadLinks[resolution].push({ linkText, linkUrl });
+        const downloadLinkArray = [];
+        item.querySelectorAll("a").forEach((link) => {
+          downloadLinkArray.push({
+            linkText: link.textContent.trim(),
+            linkUrl: link.href,
           });
+        });
+        return { resolution, downloadLinkArray };
+      });
+    });
+
+    // Organize the links by resolution
+    links.forEach((linkData) => {
+      if (linkData.resolution && downloadLinks[linkData.resolution]) {
+        downloadLinks[linkData.resolution] = linkData.downloadLinkArray;
       }
     });
 
-    return {
-      episodeTitle,
-      downloadLinks,
-    };
+    return { episodeTitle, downloadLinks };
   } catch (error) {
     console.error("Error fetching episode details:", error);
     return null;
+  } finally {
+    await browser.close();
   }
 }
