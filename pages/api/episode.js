@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   const baseUrl = `https://otakudesu.cloud/episode/${id}`; // Menggabungkan ID dengan base URL
-  const result = await getEpisodeDetails(baseUrl);
+  const result = await getEpisodeDetailsWithAllOrigins(baseUrl);
 
   if (!result) {
     return res.status(500).json({ error: "Failed to fetch episode details" });
@@ -21,17 +21,13 @@ export default async function handler(req, res) {
   res.status(200).json(result);
 }
 
-async function getEpisodeDetails(url) {
+async function getEpisodeDetailsWithAllOrigins(url) {
   try {
-    const { data } = await axios.get(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Connection": "keep-alive",
-      },
-    });
-    const $ = cheerio.load(data);
+    // AllOrigins Proxy URL
+    const allOriginsUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+    
+    const { data } = await axios.get(allOriginsUrl);
+    const $ = cheerio.load(data.contents);
 
     const episodeTitle = $("h1.entry-title").text().trim();
 
