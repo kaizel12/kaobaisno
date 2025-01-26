@@ -10,6 +10,81 @@
     }
   },
   "paths": {
+      "/api/animedetail": {
+      "get": {
+        "summary": "Ambil detail anime",
+        "description": "Mengambil detail anime dari Otakudesu berdasarkan ID anime yang diberikan.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "ID anime dari Otakudesu (contoh: `sorairo-util-sub-indo`).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil detail anime.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "title": "Sorairo Utility Subtitle Indonesia",
+                  "synopsis": "Ini adalah sinopsis dari anime Sorairo Utility.",
+                  "genres": ["Slice of Life", "Sports"],
+                  "score": "7.8",
+                  "producers": "Studio A",
+                  "type": "TV",
+                  "status": "Completed",
+                  "totalEpisodes": "1",
+                  "duration": "23 min per episode",
+                  "releaseDate": "2023-01-01",
+                  "studio": "Studio A",
+                  "episodes": [
+                    {
+                      "episodeTitle": "Episode 1",
+                      "episodeUrl": "https://example.com/episode-1"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parameter ID tidak diberikan.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "ID parameter is required"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Metode HTTP tidak diizinkan.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Method not allowed"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Gagal mengambil detail anime.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Failed to fetch anime details"
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
         "/api/episode": {
       "get": {
         "summary": "Ambil detail episode",
