@@ -27,6 +27,12 @@ async function getEpisodeDetailsWithAllOrigins(url) {
     const allOriginsUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
     
     const { data } = await axios.get(allOriginsUrl);
+
+    // Pastikan data.contents ada sebelum melanjutkan
+    if (!data || !data.contents) {
+      throw new Error("No content received from AllOrigins");
+    }
+
     const $ = cheerio.load(data.contents);
 
     const episodeTitle = $("h1.entry-title").text().trim();
