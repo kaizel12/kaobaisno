@@ -10,6 +10,115 @@
     }
   },
   "paths": {
+        "/api/episode": {
+      "get": {
+        "summary": "Ambil detail episode",
+        "description": "Mengambil judul episode dan link download berdasarkan resolusi dari Otakudesu.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "ID episode Otakudesu (contoh: srutly-episode-1-sub-indo).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail episode berhasil diambil.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "episodeTitle": {
+                      "type": "string",
+                      "description": "Judul episode."
+                    },
+                    "downloadLinks": {
+                      "type": "object",
+                      "description": "Link download berdasarkan resolusi.",
+                      "properties": {
+                        "360p": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "linkText": {
+                                "type": "string",
+                                "description": "Nama platform link download (contoh: Zippyshare, Google Drive)."
+                              },
+                              "linkUrl": {
+                                "type": "string",
+                                "description": "URL untuk mendownload file.",
+                                "format": "url"
+                              }
+                            }
+                          }
+                        },
+                        "480p": { "type": "array", "items": { "type": "object" } },
+                        "720p": { "type": "array", "items": { "type": "object" } },
+                        "1080p": { "type": "array", "items": { "type": "object" } }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parameter ID tidak diberikan.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "ID parameter is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method tidak diizinkan (harus GET).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Method not allowed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Gagal mengambil data episode.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Failed to fetch episode details"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
     "/api/kuburancanvas": {
       "get": {
         "summary": "Generate Kuburan Canvas Image",
